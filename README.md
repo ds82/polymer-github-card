@@ -1,7 +1,7 @@
 polymer-github-card
 ===================
 
-github-card> with polymer
+<github-card> with polymer
 
 See the [component page](http://ds82.github.io/github-card) for more information.
 
