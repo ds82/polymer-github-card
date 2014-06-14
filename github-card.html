@@ -1,0 +1,121 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer-ajax/polymer-xhr.html">
+<!--
+Element providing solution to no problem in particular.
+
+##### Example
+
+    <github-card></github-card>
+
+@element github-card
+@blurb Element providing solution to no problem in particular.
+@status alpha
+@homepage http://ds82.github.io/github-card
+-->
+<polymer-element name="github-card" attributes="user">
+
+  <template>
+
+    <link rel="stylesheet" href="github-card.css" />
+
+    <content>
+      <article id="element" class="user spinner">
+        <dl class="user-data">
+          <dt>Avatar:</dt>
+          <dd class="user-avatar">
+            <img src="{{github.avatar_url}}" />
+          </dd>
+
+          <dt>Fullname:</dt>
+          <dd class="user-name">{{github.name}}</dd>
+
+          <dt>Account:</dt>
+          <dd class="user-account">{{github.login}}</dd>
+        </dl>
+        <dl class="user-stats">
+          <dt>Repos</dt>
+          <dd class="user-repos" data-stats="repos">{{github.public_repos}}</dd>
+
+          <dt>Followers</dt>
+          <dd class="user-followers" data-stats="followers">{{github.followers}}</dd>
+        </dl>
+      <article>
+    </content>
+
+  </template>
+
+  <script>
+
+    (function() {
+    Polymer('github-card', {
+      /**
+       * The `noevent` event is not actually fired from here,
+       * we document it as an example of documenting events.
+       *
+       * @event noevent
+       */
+
+      /**
+       * github userid
+       *
+       * @attribute user
+       * @type string
+       */
+      user: '',
+
+      /**
+       * The `aProp` is a property that does something cool.
+       *
+       * @property aProp
+       * @type bool
+       */
+      aProp: false,
+
+      ready: function() {
+        this.github = {};
+        this.xhr = document.createElement('polymer-xhr');
+     },
+
+      userChanged: function() {
+        var that = this;
+        console.log( 'urlChanged', this.user );
+        load( this.xhr, this.user, function( data ) {
+          that.github = data;
+          that.$.element.className = that.$.element.className.replace(/spinner/, ''); 
+        });
+      },
+
+      /**
+       * The `task` method does no work at this time.
+       *
+       * @method task
+       * @return {Object} Returns undefined.
+       * @param {String} dummy Serves no purpose today.
+       */
+      task: function(dummy) {
+      }
+
+    });
+
+    var githubUrl = 'https://api.github.com/users/';
+
+    function load( xhr, user, cb ) {
+      xhr.request({
+        method: 'GET',
+        url:    githubUrl + user,
+        callback: function( raw ) {
+          try {
+            var obj = JSON.parse( raw );
+            cb( obj );
+
+          } catch( err ) {
+            console.log( 'error while parsing json', arguments );
+          }
+        }
+      });
+    }
+
+    })();
+  </script>
+
+</polymer-element>
