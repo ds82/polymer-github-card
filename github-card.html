@@ -49,13 +49,6 @@ Element providing solution to no problem in particular.
     (function() {
     Polymer('github-card', {
       /**
-       * The `noevent` event is not actually fired from here,
-       * we document it as an example of documenting events.
-       *
-       * @event noevent
-       */
-
-      /**
        * github userid
        *
        * @attribute user
@@ -63,36 +56,29 @@ Element providing solution to no problem in particular.
        */
       user: '',
 
-      /**
-       * The `aProp` is a property that does something cool.
-       *
-       * @property aProp
-       * @type bool
-       */
-      aProp: false,
-
       ready: function() {
         this.github = {};
         this.xhr = document.createElement('polymer-xhr');
+        this.load = load.bind( this );
      },
 
       userChanged: function() {
-        var that = this;
-        console.log( 'urlChanged', this.user );
-        load( this.xhr, this.user, function( data ) {
-          that.github = data;
-          that.$.element.className = that.$.element.className.replace(/spinner/, ''); 
-        });
+        this.reload();
+      },
+
+      callbackXHR: function( err, data ) {
+        this.github = data;
+        this.$.element.className = this.$.element.className.replace(/spinner/, ''); 
       },
 
       /**
-       * The `task` method does no work at this time.
+       * Realoads user data from github.
        *
-       * @method task
+       * @method reload
        * @return {Object} Returns undefined.
-       * @param {String} dummy Serves no purpose today.
        */
-      task: function(dummy) {
+      reload: function() {
+        this.load( this.xhr, this.user, this.callbackXHR.bind( this ));
       }
 
     });
@@ -106,10 +92,11 @@ Element providing solution to no problem in particular.
         callback: function( raw ) {
           try {
             var obj = JSON.parse( raw );
-            cb( obj );
+            cb( null, obj );
 
           } catch( err ) {
             console.log( 'error while parsing json', arguments );
+            cb( arguments, null );
           }
         }
       });
