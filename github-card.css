@@ -2,6 +2,22 @@
   display: block;
 }
 
+.github {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+
+  background: #fff url('assets/github.png') no-repeat 5px 5px;
+  background-size: 25px;
+
+}
+
+.github dd a {
+  width: 33px;
+  height: 33px;
+  display: block;
+}
+
 .user {
   font-family: "Helvetica", Arial, sans-serif;
   display: inline-block;
