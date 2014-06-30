@@ -25,16 +25,17 @@ Element providing solution to no problem in particular.
           <dd><a href="https://github.com/"></a></dd>
         </dl>
         <dl class="user-data">
+
           <dt>Avatar:</dt>
           <dd class="user-avatar">
-            <img src="{{github.avatar_url}}" />
+            <a href="https://github.com/{{github.login}}"><img src="{{github.avatar_url}}" /></a>
           </dd>
 
           <dt>Fullname:</dt>
           <dd class="user-name">{{github.name}}</dd>
 
           <dt>Account:</dt>
-          <dd class="user-account">{{github.login}}</dd>
+          <dd class="user-account"><a href="https://github.com/{{github.login}}">{{github.login}}</a></dd>
         </dl>
         <dl class="user-stats">
           <dt>Repos</dt>

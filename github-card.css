@@ -44,9 +44,8 @@
 }
 
 .user-data {
-  background: #fff url('assets/github.png') no-repeat 5px 5px;
-  background-size: 25px;
   height: 85px;
+  background: #fff;
 }
 
 dd.user-avatar {
@@ -76,6 +75,12 @@ dd.user-account {
   font-size: 16px;
   color: #999;
   margin: 5px 0;
+}
+
+a {
+  font-size: 16px;
+  color: #999;
+  text-decoration: none;
 }
 
 .user-stats {
