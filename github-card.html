@@ -39,10 +39,14 @@ Element providing solution to no problem in particular.
         </dl>
         <dl class="user-stats">
           <dt>Repos</dt>
-          <dd class="user-repos" data-stats="repos">{{github.public_repos}}</dd>
+          <dd class="user-repos" data-stats="repos">
+            <a href="https://github.com/{{github.login}}?tab=repositories">{{github.public_repos}}</a>
+          </dd>
 
           <dt>Followers</dt>
-          <dd class="user-followers" data-stats="followers">{{github.followers}}</dd>
+          <dd class="user-followers" data-stats="followers">
+            <a href="https://github.com/{{github.login}}/followers">{{github.followers}}</a>
+          </dd>
         </dl>
       <article>
     </content>
