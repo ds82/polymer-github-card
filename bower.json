@@ -1,9 +1,31 @@
 {
   "name": "github-card",
-  "version": "0.0.0",
-  "keywords": "seed, polymer, web-components",
+  "version": "1.0.0",
+  "authors": [
+    "Dennis Saenger <github-card@mail.ds82.de>"
+  ],
+  "description": "",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "github",
+    "github-card",
+    "profile"
+  ],
   "main": "github-card.html",
+  "license": "MIT",
+  "homepage": "https://github.com/ds82/polymer-github-card/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
   "dependencies": {
-    "polymer": "Polymer/polymer#~0.3.1"
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
   }
 }

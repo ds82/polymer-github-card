@@ -3,3 +3,4 @@ dist
 .sass-cache
 .tmp
 gh-pages
+bower_components

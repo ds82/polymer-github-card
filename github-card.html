@@ -1,117 +1,136 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../polymer-ajax/polymer-xhr.html">
 <!--
-Element providing solution to no problem in particular.
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 
-##### Example
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
 
     <github-card></github-card>
 
-@element github-card
-@blurb Element providing solution to no problem in particular.
-@status alpha
-@homepage http://ds82.github.io/github-card
+@demo
 -->
-<polymer-element name="github-card" attributes="user">
+<dom-module id="github-card">
 
+  <link rel="import" type="css" href="github-card.css" />
   <template>
-
-    <link rel="stylesheet" href="github-card.css" />
+    <iron-ajax
+      id="ajax"
+      url="[[githubSrc]]"
+      handle-as="json"
+      on-response="_handleResponse"
+    ></iron-ajax>
 
     <content>
-      <article id="element" class="user spinner">
-        <dl class="github">
-          <dt>github</dt>
-          <dd><a href="https://github.com/"></a></dd>
-        </dl>
-        <dl class="user-data">
+    <article id="element" class="user spinner">
+      <dl class="github">
+        <dt>github</dt>
+        <dd><a href="https://github.com/"></a></dd>
+      </dl>
+      <dl class="user-data">
 
-          <dt>Avatar:</dt>
-          <dd class="user-avatar">
-            <a href="https://github.com/{{github.login}}"><img src="{{github.avatar_url}}" /></a>
-          </dd>
+        <dt>Avatar:</dt>
+        <dd class="user-avatar">
+          <a href="{{makeUrl(github.login, '')}}">
+            <img src$="{{github.avatar_url}}"/>
+          </a>
+        </dd>
 
-          <dt>Fullname:</dt>
-          <dd class="user-name">{{github.name}}</dd>
+        <dt>Fullname:</dt>
+        <dd class="user-name">{{github.name}}</dd>
 
-          <dt>Account:</dt>
-          <dd class="user-account"><a href="https://github.com/{{github.login}}">{{github.login}}</a></dd>
-        </dl>
-        <dl class="user-stats">
-          <dt>Repos</dt>
-          <dd class="user-repos" data-stats="repos">
-            <a href="https://github.com/{{github.login}}?tab=repositories">{{github.public_repos}}</a>
-          </dd>
+        <dt>Account:</dt>
+        <dd class="user-account"><a href="{{makeUrl(github.login, '')}}">{{github.login}}</a></dd>
+      </dl>
+      <dl class="user-stats">
+        <dt>Repos</dt>
+        <dd class="user-repos" data-stats="repos">
+          <a href="{{makeUrl(github.login, '?tab=repositories')}}">{{github.public_repos}}</a>
+        </dd>
 
-          <dt>Followers</dt>
-          <dd class="user-followers" data-stats="followers">
-            <a href="https://github.com/{{github.login}}/followers">{{github.followers}}</a>
-          </dd>
-        </dl>
+        <dt>Followers</dt>
+        <dd class="user-followers" data-stats="followers">
+          <a href="{{makeUrl(github.login, 'followers')}}">{{github.followers}}</a>
+        </dd>
+      </dl>
       <article>
-    </content>
+        </content>
+      </template>
 
-  </template>
+</dom-module>
 
-  <script>
+<script>
 
-    (function() {
-    Polymer('github-card', {
-      /**
-       * github userid
-       *
-       * @attribute user
-       * @type string
-       */
-      user: '',
+  var githubUrl = 'https://api.github.com/users/';
+  var githubBase = 'https://github.com/';
 
-      ready: function() {
-        this.github = {};
-        this.xhr = document.createElement('polymer-xhr');
-        this.load = load.bind( this );
-     },
+  Polymer({
 
-      userChanged: function() {
-        this.reload();
-      },
-
-      callbackXHR: function( err, data ) {
-        this.github = data;
-        this.$.element.className = this.$.element.className.replace(/spinner/, ''); 
-      },
+    is: 'github-card',
+    properties: {
 
       /**
-       * Realoads user data from github.
-       *
-       * @method reload
-       * @return {Object} Returns undefined.
+       * github username
        */
-      reload: function() {
-        this.load( this.xhr, this.user, this.callbackXHR.bind( this ));
+      user: {
+        type: String,
+        observer: 'userChanged'
+      },
+
+      githubSrc: {
+        type: String
+      },
+
+      github: {
+        type: Object,
+        notify: true
       }
 
-    });
+    },
 
-    var githubUrl = 'https://api.github.com/users/';
+    // Element Lifecycle
 
-    function load( xhr, user, cb ) {
-      xhr.request({
-        method: 'GET',
-        url:    githubUrl + user,
-        callback: function( raw ) {
-          try {
-            var obj = JSON.parse( raw );
-            cb( null, obj );
+    ready: function() {
+      this.github = {};
+    },
 
-          } catch( err ) {
-            console.log( 'error while parsing json', arguments );
-            cb( arguments, null );
-          }
-        }
-      });
+    attached: function() {
+    },
+
+    detached: function() {
+    },
+
+    // Element Behavior
+    userChanged: function() {
+
+      if (this.user) {
+        this.githubSrc = githubUrl + this.user;
+        this.$.ajax.generateRequest();
+      }
+    },
+
+    makeUrl: function(login, tail) {
+      if (login) {
+        var path = login + '/' + tail;
+        return new URL(path, githubBase);
+      }
+      return '';
+    },
+
+    _handleResponse: function(e, request) {
+      this.set('github', request.response);
+      this.$.element.className = this.$.element.className.replace(/spinner/, '');
     }
 
-    })();
-  </script>
+  });
 
-</polymer-element>
+</script>
