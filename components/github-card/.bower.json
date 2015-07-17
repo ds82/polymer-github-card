@@ -1,0 +1,43 @@
+{
+  "name": "github-card",
+  "authors": [
+    "Dennis Saenger <github-card@mail.ds82.de>"
+  ],
+  "description": "",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "github",
+    "github-card",
+    "profile"
+  ],
+  "main": "github-card.html",
+  "license": "MIT",
+  "homepage": "https://github.com/ds82/polymer-github-card/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    "example.png",
+    "index.html",
+    "Makefile"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  },
+  "_release": "1825c7b937",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1825c7b9377f775bb208eaf096cbf8c1a126794c"
+  },
+  "_source": "/Users/dsaenger/code/github/polymer-github-card",
+  "_target": "master",
+  "_originalSource": "../polymer-github-card",
+  "_direct": true
+}
