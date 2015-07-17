@@ -19,7 +19,10 @@
   "ignore": [
     "/.*",
     "/test/",
-    "/demo/"
+    "/demo/",
+    "example.png",
+    "index.html",
+    "Makefile"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0"

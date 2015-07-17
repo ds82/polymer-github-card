@@ -4,3 +4,4 @@ dist
 .tmp
 gh-pages
 bower_components
+components
