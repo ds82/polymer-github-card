@@ -1,6 +1,6 @@
 {
   "name": "github-card",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "authors": [
     "Dennis Saenger <github-card@mail.ds82.de>"
   ],
@@ -19,7 +19,10 @@
   "ignore": [
     "/.*",
     "/test/",
-    "/demo/"
+    "/demo/",
+    "example.png",
+    "index.html",
+    "Makefile"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0"
